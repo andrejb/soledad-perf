@@ -3,6 +3,10 @@ from ConfigParser import ConfigParser
 from leap.soledad.client.api import Soledad
 from twisted.internet import defer
 
+# make sure the events server is running before instantiating soledad client
+from leap.common.events import server
+server.ensure_server()
+
 
 # get configs from file
 parser = ConfigParser()

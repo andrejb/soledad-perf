@@ -6,7 +6,6 @@ Get stats from dummy server running Soledad Client and spit them out.
 
 import commands
 import urllib
-import psutil
 
 stats = urllib.urlopen('http://localhost:8080/stats').read().split()
 

@@ -1,12 +1,17 @@
-# -*- coding: utf-8 -*- 
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
 
 import os
 from klein import run, route, resource
-import soledad_sync as sync
 from twisted.internet import reactor
-import datetime
+
+import soledad_sync as sync
+
+
+__all__ = [
+    'resource',
+]
 
 
 @route('/create-docs')
@@ -35,6 +40,7 @@ def pid(request):
 def stop(request):
     reactor.callLater(1, reactor.stop)
     return ''
+
 
 @route('/stats')
 def stats(request):

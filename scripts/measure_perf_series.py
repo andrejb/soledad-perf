@@ -4,13 +4,15 @@ import commands
 import datetime
 
 # How many points to measure. Make sure that you leave the baseline
-# running for a significative amount before triggering the sync, it's possible 
+# running for a significative amount before triggering the sync, it's possible
 # you have significant variability in there.
 POINTS = 400
 
 SCALE = 50
 
-commands.getoutput('echo time req/s cpu mem sync_phase sync_exchange_phase > ./out/series.log')
+commands.getoutput(
+    'echo time req/s cpu mem sync_phase sync_exchange_phase '
+    '> ./out/series.log')
 start = datetime.datetime.now()
 
 for i in range(POINTS):
@@ -25,7 +27,7 @@ for i in range(POINTS):
     try:
         # make it so the script exits succesfully when the server is dead
         commands.getoutput(
-            'echo %s\t%s\t%s\t%s\t%s\t%s >> ./out/series.log' \
+            'echo %s\t%s\t%s\t%s\t%s\t%s >> ./out/series.log'
             % (secs, value, cpu, mem, sync_phase, sync_exchange_phase))
     except ValueError:
         break

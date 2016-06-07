@@ -1,9 +1,7 @@
 import os
-import json
 from ConfigParser import ConfigParser
 from leap.soledad.client.api import Soledad
-from twisted.internet import defer, reactor
-from twisted.internet.task import deferLater
+from twisted.internet import defer
 
 
 # get configs from file
@@ -56,17 +54,16 @@ def create_docs():
     if os.path.isfile(PAYLOAD):
         with open(PAYLOAD, 'r') as f:
             payload = f.read()
-
     # create docs
     cd = []
     for i in range(NUM_DOCS):
         cd.append(s.create_doc({'payload': payload}))
     d = defer.gatherResults(cd)
-
-    d.addCallback(lambda _: s.get_all_docs())
-    d.addCallback(lambda result: "%d docs created, %d docs on db" % (NUM_DOCS, result[0]))
-    #d.addCallback(lambda _: s.close())
-
+    d.addCallback(
+        lambda _: s.get_all_docs())
+    d.addCallback(
+        lambda result: "%d docs created, %d docs on db"
+                       % (NUM_DOCS, result[0]))
     return d
 
 
@@ -84,12 +81,10 @@ def start_sync():
                 t.write_data(outfile)
             print "STOPPED TRACING, DUMPED IN CALLGRIND.THESEUS<<<<"
 
-    cd = []
-
     d = s.sync()
     d.addCallback(stop_tracing)
-
     return d
+
 
 def stats():
     global s

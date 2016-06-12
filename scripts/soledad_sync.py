@@ -1,10 +1,21 @@
+import logging
 import os
+
 from ConfigParser import ConfigParser
-from leap.soledad.client.api import Soledad
 from twisted.internet import defer
 
-# make sure the events server is running before instantiating soledad client
 from leap.common.events import server
+from leap.soledad.client.api import Soledad
+
+
+# eventually create a logger
+if os.environ.get('SOLEDAD_LOG'):
+    # create a logger
+    logger = logging.getLogger(__name__)
+    LOG_FORMAT = '[client-perf] %(asctime)s %(message)s'
+    logging.basicConfig(format=LOG_FORMAT, level=logging.DEBUG)
+
+# make sure the events server is running before instantiating soledad client
 server.ensure_server()
 
 

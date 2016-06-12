@@ -25,7 +25,6 @@ trigger-create-docs:
 	curl localhost:8080/create-docs
 
 trigger-sync:
-	#time curl localhost:8080/start-sync
 	curl localhost:8080/start-sync
 
 trigger-stop:
